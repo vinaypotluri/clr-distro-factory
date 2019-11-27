@@ -68,7 +68,7 @@ finalize_image() {
     fi
 
     local finalized_list
-    for image_file in "${file_list[@]}"; do
+    for image_file in ${file_list}; do
         if [[ -s "${finalize_script}" ]]; then
             if ! finalized_list=$("${finalize_script}" "${image_file}"); then
                 error "${name}" "Image finalization failed"

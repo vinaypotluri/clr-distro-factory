@@ -1,0 +1,29 @@
+pipeline {
+    agent { label 'clr-builders-dev' }
+
+    environment {
+        NAMESPACE = "${JOB_NAME}"
+        WORK_DIR = "${WORKSPACE}/work"
+    }
+
+    stages {
+        stage('Prologue') {
+            steps {
+                sh 'release/prologue.sh'
+            }
+        }
+        stage('Create Images') {
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'release/images.sh'
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            echo "Release Pipeline OUT - ${env.BUILD_TAG}"
+        }
+    }
+}
