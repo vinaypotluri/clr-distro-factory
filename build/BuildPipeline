@@ -1,5 +1,5 @@
 pipeline {
-    agent { label 'clr-builders' }
+    agent { label 'clr-builders-dev' }
 
     environment {
         NAMESPACE = "${JOB_NAME}"
